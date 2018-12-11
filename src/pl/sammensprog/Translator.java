@@ -10,4 +10,7 @@ public interface Translator {
     ArrayList<DefinedObject> extractData(List<String> selectedData);
     //insertData: turns DefinedObject into formatted text
     ArrayList<String> insertData(List<DefinedObject> objects);
+
+    //findElementInObject: from non-translated element at id, find a given property (e.g. column number, XPath)
+    TextRange findPropertyInObject(int id, String property);
 }
