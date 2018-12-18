@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 class Settings {
 
@@ -19,7 +20,10 @@ class Settings {
 
     //readFromJSON: creates Settings class from JSON file
     static Settings readFromJSON(String descriptionFile) throws FileNotFoundException {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Assertion.class, new AssertionSerializer())
+                .registerTypeAdapter(Assertion.class, new AssertionDeserializer())
+                .create();
         Settings result = gson.fromJson(new FileReader(descriptionFile), Settings.class);
         result.selectorBuilder = SelectorBuilderSelector.from(result.globalSettings.selector);
         result.translatorBuilder = TranslatorBuilderSelector.from(result.globalSettings.translator);

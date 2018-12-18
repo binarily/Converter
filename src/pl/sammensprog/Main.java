@@ -1,13 +1,24 @@
 package pl.sammensprog;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import pl.sammensprog.Example.ExampleAssertion;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
 
-    public static int main(String[] args) {
+    public static void main(String[] args) {
+        if(args.length == 0) {
+            ExampleProcedure();
+            return;
+        }
+        //Ignore the rest for now
 	    //Create a context and settings
         Context context;
         Settings settings;
@@ -16,14 +27,14 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Could not read original file.");
             e.printStackTrace();
-            return -1;
+            return;
         }
         try {
             settings = Settings.readFromJSON(args[2]);
         } catch (FileNotFoundException e) {
             System.out.println("Could not read description file.");
             e.printStackTrace();
-            return -1;
+            return;
         }
 
         //Convert for every object listed in context
@@ -50,8 +61,32 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("Could not write to directory.");
             e.printStackTrace();
-            return -1;
         }
-        return 0;
+    }
+
+    private static void ExampleProcedure(){
+        GlobalSettings gs = new GlobalSettings();
+        gs.selector="ExampleSelector";
+        gs.translator = "ExampleTranslator";
+
+        ObjectSettings os = new ObjectSettings();
+        os.forSelectorFrom = new HashMap<String, String>(){{put("id", "5");}};
+        os.forSelectorTo = new HashMap<String, String>(){{put("id", "7");}};
+        os.forTranslatorFrom = new HashMap<String, String>(){{put("separator", " ");}};
+        os.forTranslatorTo = new HashMap<String, String>(){{put("separator", " ");}};
+        os.forDefinedObject = new HashMap<String, Assertion[]>(){{put("data", new Assertion[]{new ExampleAssertion()});}};
+
+        Settings st = new Settings();
+        st.specificSettings = Arrays.asList(os);
+        st.globalSettings=gs;
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Assertion.class, new AssertionSerializer())
+                .registerTypeAdapter(Assertion.class, new AssertionDeserializer())
+                .create();
+        String res = gson.toJson(st);
+        System.out.println(res);
+        Settings newSettings = gson.fromJson(res, Settings.class);
+
     }
 }
