@@ -9,7 +9,7 @@ public class DefinedObject {
         this.settings = settings;
         this.values = values;
         validate();
-    };
+    }
 
     private void validate() throws IllegalArgumentException {
         for(String key: settings.keySet()){
@@ -20,6 +20,10 @@ public class DefinedObject {
                     throw new AssertionError("One of validation assertions was not met.");
             }
         }
+    }
+
+    public String get(String key){
+        return values.getOrDefault(key,"");
     }
 
 }
