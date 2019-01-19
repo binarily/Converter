@@ -41,13 +41,13 @@ public class Main {
         for(ObjectSettings setting: settings.specificSettings){
 
             //Create proper translators and selectors
-            Selector selectorFrom = settings.selectorBuilder.build(context, setting.forSelectorFrom);
-            Translator translatorFrom = settings.translatorBuilder.build(setting.forTranslatorFrom, setting.forDefinedObject);
+            Selector selectorFrom = settings.selectorBuilderFrom.build(context, setting.forSelectorFrom);
+            Translator translatorFrom = settings.translatorBuilderFrom.build(setting.forTranslatorFrom, setting.forDefinedObject);
 
             ArrayList<DefinedObject> objects;
 
-            Translator translatorTo = settings.translatorBuilder.build(setting.forTranslatorTo, setting.forDefinedObject);
-            Selector selectorTo = settings.selectorBuilder.build(context, setting.forSelectorTo);
+            Translator translatorTo = settings.translatorBuilderFrom.build(setting.forTranslatorTo, setting.forDefinedObject);
+            Selector selectorTo = settings.selectorBuilderFrom.build(context, setting.forSelectorTo);
 
             List<String> a = selectorFrom.findAll();
             objects = translatorFrom.extractData(a);
@@ -66,8 +66,10 @@ public class Main {
 
     private static void ExampleProcedure(){
         GlobalSettings gs = new GlobalSettings();
-        gs.selector="ExampleSelector";
-        gs.translator = "ExampleTranslator";
+        gs.selectorFrom="ExampleSelector";
+        gs.translatorFrom = "ExampleTranslator";
+        gs.translatorTo = "ExampleTranslator";
+        gs.selectorTo="ExampleSelector";
 
         ObjectSettings os = new ObjectSettings();
         os.forSelectorFrom = new HashMap<String, String>(){{put("id", "5");}};

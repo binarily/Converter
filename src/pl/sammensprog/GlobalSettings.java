@@ -1,7 +1,7 @@
 package pl.sammensprog;
 
 public class GlobalSettings {
-    String translator;
-    String selector;
+    String translatorFrom, translatorTo;
+    String selectorFrom,selectorTo;
 
 }

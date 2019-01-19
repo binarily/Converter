@@ -15,8 +15,10 @@ class Settings {
     List<ObjectSettings> specificSettings;
 
     //Builders
-    SelectorBuilder selectorBuilder = null;
-    TranslatorBuilder translatorBuilder = null;
+    SelectorBuilder selectorBuilderFrom = null;
+    TranslatorBuilder translatorBuilderFrom = null;
+    TranslatorBuilder translatorBuilderTo = null;
+    SelectorBuilder selectorBuilderTo = null;
 
     //readFromJSON: creates Settings class from JSON file
     static Settings readFromJSON(String descriptionFile) throws FileNotFoundException {
@@ -25,8 +27,11 @@ class Settings {
                 .registerTypeAdapter(Assertion.class, new AssertionDeserializer())
                 .create();
         Settings result = gson.fromJson(new FileReader(descriptionFile), Settings.class);
-        result.selectorBuilder = SelectorBuilderSelector.from(result.globalSettings.selector);
-        result.translatorBuilder = TranslatorBuilderSelector.from(result.globalSettings.translator);
+        result.selectorBuilderFrom = SelectorBuilderSelector.from(result.globalSettings.selectorFrom);
+        result.translatorBuilderFrom = TranslatorBuilderSelector.from(result.globalSettings.translatorFrom);
+        result.translatorBuilderTo = TranslatorBuilderSelector.from(result.globalSettings.translatorTo);
+        result.selectorBuilderTo = SelectorBuilderSelector.from(result.globalSettings.selectorFrom);
+
         return result;
     }
 }
