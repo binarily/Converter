@@ -12,6 +12,8 @@ public class DefinedObject {
     }
 
     private void validate() throws IllegalArgumentException {
+        if(settings == null)
+            return;
         for(String key: settings.keySet()){
             Assertion[] assertions = settings.get(key);
             String value = values.get(key);
