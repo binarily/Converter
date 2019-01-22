@@ -11,10 +11,10 @@ import java.util.List;
 
 public class ExampleTranslator implements Translator {
     private HashMap<String, String> settings;
-    private HashMap<String, Assertion> definedObjectSettings;
+    private HashMap<String, Assertion[]> definedObjectSettings;
 
     @Override
-    public void initialize(HashMap<String, String> settings, HashMap<String, Assertion> definedObjectSettings) {
+    public void initialize(HashMap<String, String> settings, HashMap<String, Assertion[]> definedObjectSettings) {
         this.settings = settings;
         this.definedObjectSettings=definedObjectSettings;
     }
