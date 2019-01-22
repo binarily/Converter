@@ -46,8 +46,8 @@ public class Main {
 
             ArrayList<DefinedObject> objects;
 
-            Translator translatorTo = settings.translatorBuilderFrom.build(setting.forTranslatorTo, setting.forDefinedObject);
-            Selector selectorTo = settings.selectorBuilderFrom.build(context, setting.forSelectorTo);
+            Translator translatorTo = settings.translatorBuilderTo.build(setting.forTranslatorTo, setting.forDefinedObject);
+            Selector selectorTo = settings.selectorBuilderTo.build(context, setting.forSelectorTo);
 
             List<String> a = selectorFrom.findAll();
             objects = translatorFrom.extractData(a);
