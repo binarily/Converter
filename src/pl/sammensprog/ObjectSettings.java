@@ -1,5 +1,7 @@
 package pl.sammensprog;
 
+import pl.sammensprog.Objects.Assertion;
+
 import java.util.HashMap;
 
 class ObjectSettings {

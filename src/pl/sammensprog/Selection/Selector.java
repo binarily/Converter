@@ -1,4 +1,7 @@
-package pl.sammensprog;
+package pl.sammensprog.Selection;
+
+import pl.sammensprog.Context;
+import pl.sammensprog.TextRange;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +14,7 @@ public interface Selector {
 
     //For use in GUI
     //isType: checks whether provided document can be converted by a selector
-    static boolean isType(String document){return false;};
+    static boolean isType(String document){return false;}
     //findInTextAt: finds elements matching selector, then returns a starting and ending position of element at given index
     TextRange findInTextAt(int index);
 
