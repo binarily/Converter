@@ -1,4 +1,8 @@
-package pl.sammensprog;
+package pl.sammensprog.Translation;
+
+import pl.sammensprog.Objects.Assertion;
+import pl.sammensprog.Objects.DefinedObject;
+import pl.sammensprog.TextRange;
 
 import java.util.*;
 

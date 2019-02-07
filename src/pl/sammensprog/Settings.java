@@ -6,6 +6,13 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import pl.sammensprog.Objects.Assertion;
+import pl.sammensprog.Objects.AssertionDeserializer;
+import pl.sammensprog.Objects.AssertionSerializer;
+import pl.sammensprog.Selection.SelectorBuilder;
+import pl.sammensprog.Selection.SelectorBuilderSelector;
+import pl.sammensprog.Translation.TranslatorBuilder;
+import pl.sammensprog.Translation.TranslatorBuilderSelector;
 
 class Settings {
 
@@ -20,18 +27,33 @@ class Settings {
     TranslatorBuilder translatorBuilderTo = null;
     SelectorBuilder selectorBuilderTo = null;
 
-    //readFromJSON: creates Settings class from JSON file
-    static Settings readFromJSON(String descriptionFile) throws FileNotFoundException {
+    //Constructors
+    static Settings fromFile(String descriptionFile) throws FileNotFoundException {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Assertion.class, new AssertionSerializer())
                 .registerTypeAdapter(Assertion.class, new AssertionDeserializer())
                 .create();
         Settings result = gson.fromJson(new FileReader(descriptionFile), Settings.class);
-        result.selectorBuilderFrom = SelectorBuilderSelector.from(result.globalSettings.selectorFrom);
-        result.translatorBuilderFrom = TranslatorBuilderSelector.from(result.globalSettings.translatorFrom);
-        result.translatorBuilderTo = TranslatorBuilderSelector.from(result.globalSettings.translatorTo);
-        result.selectorBuilderTo = SelectorBuilderSelector.from(result.globalSettings.selectorFrom);
-
+        result.setUpBuilders();
         return result;
     }
+
+    static Settings fromString(String description){
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Assertion.class, new AssertionSerializer())
+                .registerTypeAdapter(Assertion.class, new AssertionDeserializer())
+                .create();
+        Settings result = gson.fromJson(description, Settings.class);
+        result.setUpBuilders();
+        return result;
+    }
+
+    //Helpers
+    private void setUpBuilders(){
+        this.selectorBuilderFrom = SelectorBuilderSelector.from(this.globalSettings.selectorFrom);
+        this.translatorBuilderFrom = TranslatorBuilderSelector.from(this.globalSettings.translatorFrom);
+        this.translatorBuilderTo = TranslatorBuilderSelector.from(this.globalSettings.translatorTo);
+        this.selectorBuilderTo = SelectorBuilderSelector.from(this.globalSettings.selectorTo);
+    }
+
 }

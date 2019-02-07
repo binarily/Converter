@@ -1,4 +1,6 @@
-package pl.sammensprog;
+package pl.sammensprog.Selection;
+
+import pl.sammensprog.Context;
 
 import java.util.HashMap;
 

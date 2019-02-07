@@ -1,6 +1,6 @@
 package pl.sammensprog;
 
-public class GlobalSettings {
+class GlobalSettings {
     String translatorFrom, translatorTo;
     String selectorFrom,selectorTo;
 

@@ -1,4 +1,6 @@
-package pl.sammensprog;
+package pl.sammensprog.Translation;
+
+import pl.sammensprog.Objects.Assertion;
 
 import java.util.HashMap;
 

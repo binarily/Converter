@@ -1,4 +1,4 @@
-package pl.sammensprog;
+package pl.sammensprog.Objects;
 
 import java.util.HashMap;
 
