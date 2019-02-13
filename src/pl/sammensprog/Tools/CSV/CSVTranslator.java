@@ -1,7 +1,6 @@
 package pl.sammensprog.Tools.CSV;
 
 import pl.sammensprog.Objects.DefinedObject;
-import pl.sammensprog.TextRange;
 import pl.sammensprog.Translation.Translator;
 import java.util.ArrayList;
 import pl.sammensprog.Objects.Assertion;
@@ -79,10 +78,5 @@ public class CSVTranslator implements Translator {
             result.add(join(delimeter, pulled));
         }
         return result;
-    }
-
-    @java.lang.Override
-    public TextRange findPropertyInObject(int id, String property) {
-        return null;
     }
 }

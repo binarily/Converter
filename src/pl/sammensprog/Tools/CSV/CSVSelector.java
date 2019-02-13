@@ -2,7 +2,6 @@ package pl.sammensprog.Tools.CSV;
 
 import pl.sammensprog.Context;
 import pl.sammensprog.Selection.Selector;
-import pl.sammensprog.TextRange;
 
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -17,11 +16,6 @@ public class CSVSelector implements Selector {
         this.context = context;
         this.key = settings.get("id");
         this.delimeter = settings.get("delimeter");
-    }
-
-    @java.lang.Override
-    public TextRange findInTextAt(int index) {
-        return null;
     }
 
     @java.lang.Override
@@ -44,4 +38,7 @@ public class CSVSelector implements Selector {
         }
         context.result += sb.toString();
     }
+
+    @Override
+    public void reinitialize() {} //We don't use cached structures here
 }
