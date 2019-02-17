@@ -7,30 +7,18 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 
 public class AssertionDeserializer implements JsonDeserializer<Assertion> {
+    private static HashMap<String, Assertion> builders = new HashMap<>();
+
+    public static void register(String name, Assertion builder){
+        builders.put(name, builder);
+    }
+
     @Override
     public Assertion deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        Class<?> cl;
-        try {
-            cl = Class.forName(jsonElement.getAsJsonObject().get("name").getAsString());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new JsonParseException("Class not found.");
+        Assertion result = builders.getOrDefault(jsonElement.getAsJsonObject().get("name").getAsString(), null);
+        if(result==null){
+            throw new JsonParseException("Assertion not found: may not have been registered");
         }
-        Constructor<?> ctor;
-        try {
-            ctor = cl.getConstructor();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            throw new JsonParseException("Class not found.");
-        }
-        Object assertion;
-        try {
-            assertion = ctor.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new JsonParseException("Class not found.");
-        }
-        Assertion result = (Assertion) assertion;
         HashMap<String, String> settings;
         try {
             settings = jsonDeserializationContext
