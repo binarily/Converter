@@ -13,6 +13,7 @@ import java.util.List;
 public class Converter {
     private Context context = null;
     private Settings settings = null;
+    private boolean reinitialize = false;
 
     //Constructors
     private Converter(){}
@@ -34,10 +35,12 @@ public class Converter {
     //File change methods: for conversion of multiple files
     public void changeDocument(String newDocument){
         this.context = Context.fromString(newDocument);
+        reinitialize = true;
     }
 
     public void changeFile(String newPath) throws IOException {
         this.context = Context.fromFile(newPath);
+        reinitialize = true;
     }
 
     //Result extraction methods
@@ -66,6 +69,12 @@ public class Converter {
             Translator translatorTo = this.settings.translatorBuilderTo.build(setting.forTranslatorTo, setting.forDefinedObject);
             Selector selectorTo = this.settings.selectorBuilderTo.build(this.context, setting.forSelectorTo);
 
+            //Reinitialize selectors if required
+            if(reinitialize){
+                selectorFrom.reinitialize();
+                selectorTo.reinitialize();
+                reinitialize = false;
+            }
             //Actual conversion
             List<String> matchingElements = selectorFrom.findAll();
             ArrayList<DefinedObject> objects = translatorFrom.extractData(matchingElements);
